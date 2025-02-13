@@ -18,7 +18,7 @@ Make sure you have Python installed. If not, go get it [here](https://www.python
 
 1. Clone this repo (because it's awesome):
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
+   git clone https://github.com/NdaedzoPhoshoko/Exploring-RestAPIs-Flusk-Python
    cd your-repo-name
    ```
 
@@ -101,7 +101,7 @@ Want to make this project even cooler? Fork it, make your changes, and submit a 
 
 ## License 📜
 
-This project is licensed under the MIT License. Do whatever you want with it, just don't blame us if it breaks the internet. 😉
+Do whatever you want with it, just don't blame us if it breaks the internet. 😉
 
 ## Acknowledgements 🙌
 
