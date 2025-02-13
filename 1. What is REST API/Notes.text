@@ -1,0 +1,164 @@
+FLusk is a framework used for buidling APIs, dynamic and iteractive websites and 
+microservices using python.
+This folder will cover:
+    1. User authentication module
+    2. CRUD Rest Apis(create, read, update and delete)
+    3. Using Swagger for API documentation, unit tests, debbging and etc.
+    4. For unit tests: we will use PyTest
+    5. PostMan for API lifecycle
+    6. Monitoring API deployment( including ammount of downtime)
+    7. Deploying API on cloud Ubuntu(using uWSGI and Heroku)
+
+We explore what is known as "stateless", allowing the client and server to communicate 
+without knowing each other's state. Both server and user can understand any message without
+seeing any previous message.
+
+Restful services must have uniform API interfaces to access resources.
+Using a uniform logical URI that fetch and manipulate data.
+
+Methods(verbs used in RESTful services):
+We use Safe methods such as GET or HEAD to access and not modify resources.
+Idempotent methods are the ones that modify resources, but they produce the same results
+no matter how many times they are run.
+
+HTTP examples of methods
+1. GET - reads single or multiple resources
+2. POST - creates/inserts a new or exsisting resource
+3. PUT - updates/creates/insert resources
+4. DELETE - deletes a single or multiple resources
+5. OPTIONS - reads/lists operations on a resource
+6. HEAD - reads/return the response headers and not a body
+7. PATCH - updates/modify the resource(mostly in large data)
+
+RESTful services focus on resources and providing access to this resources. We think of a
+resource as an object in OPP, it has a type, associated data,
+relationships to other resources, a set of methods and links to other resources for control flow
+
+It is important to:
+1. Identify different resources and their relationships
+2. Use representations that defines the current state of a resource
+    Either use JSON(recommended format) or XML to represent rescourses
+    JSON example of a Book resource:
+    {
+        "ID": "1",
+        "Name": "My first resource presentation",
+        "Author": "Ndaedzo Phoshoko",
+        "Publisher": "This and That"
+    }
+
+Messages
+The client-server communication happens through messages. A client sends a message 
+called a request and the server sends back a response. This messages are HTTP request-response.
+
+A client may send an HTTP request like this:
+    GET /comments?postId=1 HTTP/1.1
+    Host: jsonplaceholder.thisthat.com
+    Cache-Control: no-cache
+    Postman-Token: 747dgd-3727f-gjhg-032-xx34f
+
+A server may send a response like this:
+    [
+        {
+            "postId": 1,
+            "id": 1,
+            "name": "whowho widlcards"
+            "email": "whowho.wildcards@qpsr.com"
+            "body": "abcde feed fjfgjg"
+        },
+        {
+            "postId": 1,
+            "id": 2,
+            "name": "yes milk please"
+            "email": "yes.milk@testermail.com"
+            "body": "I say its not that bad."
+        }
+    ]
+The client sent a request of comments by specifiying a path/comment found in server.
+HTTP/1.1 means HTTP version
+
+Below is an example to show a REST API resource that contains a link to another resourcer:
+    {
+        "ID": "1"
+        "Name": "Resource with link"
+        "Author": "Ndaedzo Phoshoko"
+        "URI": "https://another.site.com/za/tester/0123456789"
+    }
+
+Cache
+Caching is a technique used to store a tiny copy of a given resource and serves it back when requested,
+reducing processing time and extra DB calls.
+
+Steps to consider when creating an API
+    1. Understand the use case( why and what?)
+    2. List down all API features
+    3. Identify different platforms that'll use the API
+    4. Plan scailing the infrastructure
+    5. Plan API version
+    6. Plan API access strategy( authentication, ALC, and throttling)
+    7. Plan the documentation and testing
+
+Design
+When designing an API use a tool such as API Designer to understand the design before development.
+We can use Swagger or RAML for this.
+
+Prototyping
+This will help visualize the API before the actual development.
+
+Authentication and Authorization
+We can use different methods for this, such as HMAC, basic authentication, and OAuth 2.0 that uses a 
+token to access a resource.
+
+Steps I have taken to set up my project
+1. Open a new terminal and type:
+    pip install virtualenv
+2. Then enter:
+    virtualenv venv
+3. Activate the venv by entering:
+    venv\Scripts\activate
+4. Install flusk:
+    pip install Flask
+5. Create you app.py project:
+
+pfrom flask import Flask, jsonify
+
+app = Flask(__name__)
+@app.route('/api', methods=['GET'])
+def get_data():
+    return jsonify({
+        'message': 'Hello, World!'
+    })
+if __name__ == '__main__':
+    app.run(debug=True)
+
+Since we know that swagger is used for documentation, we follow this steps to provide such
+1. Open terminal and enter command:
+    pip install flasgger
+2. On the get_data() method provide paragraph comments such :
+    def get_data():
+    """
+    Get user data
+    ---
+    responses:
+      200:
+        description: A JSON object containing email and password
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: hello@tester.com
+            password:
+              type: string
+              example: hello@123
+    """
+    return jsonify({
+        'email': 'hello@tester.com',
+        'password': 'hello@123'
+    })
+
+Endpoints
+We will use the word "endpoints" a lot, this are data that you wish your APi retrieves
+Example may be comments, usernames, user favourite drinks, etc..
+An endpoint can be made public, so that multiple developers can also retrieve same data usin different technologies.
+
+
